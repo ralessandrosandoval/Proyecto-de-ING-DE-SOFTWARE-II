@@ -1,16 +1,48 @@
-# React + Vite
+# LiftUp – Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend del proyecto **Lift Up: Red Social Fitness Inclusiva** (Ingeniería de Software – Universidad de Lima).
+El diseño sigue los mockups del Sprint 1 y el layout está pensado "mobile-first" (columna de 480px centrada).
 
-Currently, two official plugins are available:
+## Cómo correrlo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+Abre http://localhost:5173. Por ahora funciona **sin backend**: `src/services/api.js` es un mock que guarda todo en `localStorage`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Historias de usuario implementadas (Sprint 1)
 
-## Expanding the ESLint configuration
+| HU | Pantalla | Archivo |
+|----|----------|---------|
+| HU-001 Registro | `/register` | `src/pages/Register.jsx` |
+| HU-002 Iniciar sesión (sesión persistente) | `/login` | `src/pages/Login.jsx` |
+| HU-003 Cerrar sesión | `/profile` | `src/pages/Profile.jsx` |
+| HU-004 Editar perfil | `/profile/edit` | `src/pages/EditProfile.jsx` |
+| HU-005 Publicar / ver / editar / eliminar sesión | `/new`, `/session/:id` | `NewSession.jsx`, `SessionDetail.jsx` |
+| HU-006 Feed | `/` | `src/pages/Feed.jsx` |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Estructura
+
+```
+src/
+  components/   UI reutilizable (ui.jsx, PostCard, ConfirmModal, BottomNav, guards de rutas)
+  context/      AuthContext (sesión)
+  hooks/        useAuth
+  pages/        una pantalla por archivo
+  services/     api.js  <- aquí se conecta el backend
+  utils/        helpers (fechas, imágenes)
+  constants.js  niveles, formatos permitidos, regex de correo
+```
+
+## Conectar con el backend (Node + Express + MySQL)
+
+Cada función de `src/services/api.js` tiene el endpoint equivalente del documento (`POST /auth/register`, `POST /auth/login`, ...).
+Reemplaza el cuerpo por `fetch(`${API_URL}/...`)` y define `VITE_API_URL` en un archivo `.env`:
+
+```
+VITE_API_URL=http://localhost:3000
+```
+
+Cuando exista el JWT, guárdalo en `AuthContext.jsx` (`SESSION_KEY`) y envíalo en el header `Authorization`.
