@@ -19,7 +19,27 @@ export default function Profile() {
 
   return (
     <>
-
+      <PageHeader title="Mi Perfil" />
+      <section className="profile">
+        <Avatar name={user.name} src={user.avatar} size={96} />
+        <h2>{user.name}</h2>
+        <div className="muted">Nivel: {user.level}</div>
+        {user.bio && <p>{user.bio}</p>}
+        <div className="col">
+          <Button variant="outline" onClick={() => navigate('/profile/edit')}>Editar perfil</Button>
+          <Button variant="outline" onClick={() => setConfirmLogout(true)}>Cerrar sesión</Button>
+        </div>
+      </section>
+      <h3 className="pad">Mis sesiones ({posts.length})</h3>
+      {posts.map((p) => <PostCard key={p.id} post={p} />)}
+      {confirmLogout && (
+        <ConfirmModal
+          title="¿Cerrar sesión?"
+          message="Tendrás que iniciar sesión nuevamente para acceder a tu perfil."
+          onCancel={() => setConfirmLogout(false)}
+          onConfirm={signOut} // HU-003: al limpiar la sesión, ProtectedRoute redirige a /login
+        />
+      )}
     </>
   )
 }
