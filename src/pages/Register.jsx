@@ -29,17 +29,6 @@ export default function Register() {
   }
 
   return (
-    <div className="shell auth">
-      <h1>Crea tu cuenta</h1>
-      <p className="muted">Un espacio sin juicios para crecer contigo mismo</p>
-      <form onSubmit={submit} noValidate>
-        <Input label="Nombre" placeholder="Tu nombre" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
-        <Input label="Correo electrónico" type="email" placeholder="tu@correo.com" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Input label="Contraseña" type="password" placeholder="Mínimo 8 caracteres" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <ErrorBox message={error} />
-        <Button type="submit" loading={loading}>Registrarme</Button>
-      </form>
-      <p className="center-text muted">¿Ya tienes cuenta? <Link to="/login"><strong>Inicia sesión →</strong></Link></p>
-    </div>
+
   )
 }
